@@ -39,8 +39,6 @@ When modifying a Ultralytics YOLOv5 repository to adapt custom layers and activa
 
 ### 1.2 Host Environment Setup (Ubuntu, Docker, Vitis AI)
 
-### 1.2 Host Environment Setup (Ubuntu, Docker, Vitis AI)
-
 To perform INT8 quantization, model inspection, and compilation, you must prepare the host environment with the official Vitis AI Docker container. You can follow the [Official Vitis AI MPSoC Setup Guide](https://xilinx.github.io/Vitis-AI/3.0/html/docs/quickstart/mpsoc.html) or run the commands below.
 
 #### Step 1: Install Ubuntu via WSL2 (Windows PowerShell)
