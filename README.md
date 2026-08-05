@@ -82,6 +82,13 @@ Navigate to the root directory of the cloned Vitis-AI repo, start the Docker con
 ```host
 # Launches the Vitis AI Docker container with workspace auto-mounted
 ./docker_run.sh xilinx/vitis-ai-pytorch-cpu:latest
+```
+
+> [!NOTE]
+> **Troubleshooting & Optimization Tips:**
+> 
+> * **WSL2 Memory Usage:** If you encounter performance issues with Ubuntu or WSL consuming excessive host RAM, you can limit the WSL virtual machine memory allocation (e.g., capping it at 4GB or 8GB depending on your quantization workload; setting `memory=1GB` for basic terminal operations). Check this setup guide: [WSL Memory Configuration Guide](https://youtu.be/urDkRPVvd88?si=wpjNyLsrLhyoyzaP).
+> * **Docker Disk Space Management:** The Vitis AI Docker container images are quite large and can quickly consume disk capacity. If Docker is taking up too much storage on your system drive, refer to this walkthrough: [Managing & Moving Docker Disk Usage](https://www.youtube.com/watch?v=MFtdjhwC1co).
 
 # Activates the target PyTorch conda environment configured for Vitis AI quantization
 conda activate vitis-ai-pytorch
