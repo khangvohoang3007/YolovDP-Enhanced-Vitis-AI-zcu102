@@ -1,14 +1,16 @@
 # QUANTIZATION AND DPU DEPLOYMENT FOR CUSTOM-LAYER YOLO MODEL (YOLOVDP-ENHANCED) ON XILINX ZCU102
 
-This repository provides a step-by-step guide on how to quantize, compile, and deploy **YOLOvDP-Enhanced**—a customized variant based on the **YOLOv5** architecture featuring custom layers—from PyTorch (`best.pt`) to an INT8 compiled `.xmodel` running on the Deep Learning Processing Unit (DPU) of the **Xilinx Zynq UltraScale+ MPSoC ZCU102** evaluation board.
+This repository provides a step-by-step guide on how to quantize, compile, and deploy **YOLOvDP-Enhanced**—a customized object detection architecture modified from YOLOv5 with custom layer structures—from PyTorch floating-point weights (`best.pt`) to an INT8 compiled `.xmodel` running on the Deep Learning Processing Unit (DPU) of the **Xilinx Zynq UltraScale+ MPSoC ZCU102** evaluation board.
 
----
+**The Story:**
+I trained a custom object detection model based on the YOLOv5 architecture, integrated with custom layer structures for improved feature extraction (**YOLOvDP-Enhanced**). After training, I obtained the floating-point weight file (`best.pt`). 
 
-## 1. ❓ Problem Statement
+The main challenge now is: **How can I successfully deploy and run this custom model to perform real-time image detection on the Xilinx ZCU102 DPU board?**
 
-After training a custom **YOLOvDP-Enhanced** model (modified from YOLOv5 with custom layer structures) and obtaining the floating-point weight file (`best.pt`), the challenge is:
+> 📌 **Note:** The pre-trained floating-point weights (`best.pt`) and model architecture source code used in this project are available at:  
+> 👉 [Enhanced-YOLOvDP-Fps-Upgrade GitHub Repository](https://github.com/khangvohoang3007/Enhanced-YOLOvDP-Fps-Upgrade)
 
-> **How can we bypass unsupported operator constraints on the Xilinx DPU, perform INT8 quantization via Vitis AI, and compile the PyTorch model into an executable `.xmodel` to perform real-time image detection directly on the ZCU102 hardware?**
+Because the Xilinx DPU hardware only supports a fixed set of standard neural network operators, deploying a model with custom layers requires resolving operator incompatibility, performing INT8 quantization via Vitis AI, and compiling the model into an executable `.xmodel`.
 
 ---
 
