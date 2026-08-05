@@ -56,10 +56,12 @@ wsl --list --online
 
 # Launches the Ubuntu 20.04 environment
 wsl -d Ubuntu-20.04
+```
 
 #### Step 2: Verify Docker on Ubuntu WSL
 After launching Ubuntu WSL and installing Docker Desktop (with WSL 2 backend integration enabled), run the following commands to clone Vitis AI and verify your container runtime:
 
+```host
 # Clones the official Xilinx Vitis AI repository
 git clone [https://github.com/Xilinx/Vitis-AI](https://github.com/Xilinx/Vitis-AI)
 
@@ -68,15 +70,18 @@ docker run hello-world
 
 # Checks the installed Docker client and engine versions
 docker --version
+```
 
 #### Step 3: Pull Vitis AI Docker Image
 Pull the CPU-based PyTorch Docker image maintained by Xilinx:
-
+```host
 docker pull xilinx/vitis-ai-pytorch-cpu:latest
+```
 
 #### Step 4: Launch Container & Configure Environment
 Navigate to the root directory of the cloned Vitis-AI repo, start the Docker container, and activate the required Python dependencies:
 
+```host
 # Launches the Vitis AI Docker container with workspace auto-mounted
 ./docker_run.sh xilinx/vitis-ai-pytorch-cpu:latest
 
@@ -85,3 +90,5 @@ conda activate vitis-ai-pytorch
 
 # Installs supplementary packages required by the customized YOLOv5 architecture
 pip install seaborn timm efficientnet_pytorch
+```
+
