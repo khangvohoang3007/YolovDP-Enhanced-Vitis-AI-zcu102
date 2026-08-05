@@ -21,6 +21,21 @@ Because the Xilinx DPU hardware only supports a fixed set of standard neural net
 
 ### 1.1 Model & Custom Layer Requirements
 
+Different Xilinx edge devices and DPU architectures support different sets of activation functions. For instance, platforms like the KV260 or ZCU102 may not natively support non-linear activations like **SiLU** on the DPU hardware, causing fallback to CPU or quantization errors. In our **YOLOvDP-Enhanced** model, all unsupported activations were explicitly replaced with **LeakyReLU** to ensure seamless INT8 quantization and full DPU hardware acceleration.
+
+> 📌 **Useful Resources:**
+> - **Supported Operators Reference:** Check the official [Vitis AI Supported Operators Documentation](https://docs.amd.com/r/en-US/ug1414-vitis-ai/Currently-Supported-Operators) to verify operator compatibility for your target DPU architecture.
+> - **Retrained Kaggle Notebook:** View our retrained model and weight preparation process on [Kaggle](https://www.kaggle.com/code/gautapcode/vitis-ai).
+
+#### Required Code Modifications
+When modifying a Ultralytics YOLOv5 repository to adapt custom layers and activation functions, you need to adjust several core files depending on your specific network design:
+
+- `models/common.py` (Defines custom block structures and activation layer mappings)
+- `models/yolo.py` (Handles parsing and building network architecture layers)
+- `models/experimental.py` (Contains experimental modules and layer wrappers)
+- `train.py` (Configures training parameters and model initialization)
+
+> 💡 **Reference Guide:** For a detailed breakdown of replacing activation layers and modifying YOLOv5 source code for Vitis AI compatibility, refer to this [Hackster.io Guide on YOLOv5 Quantization with Vitis AI 3.0](https://www.hackster.io/LogicTronix/yolov5-quantization-compilation-with-vitis-ai-3-0-for-kria-7b005d).
 
 ### 1.2 Host Environment Setup (Ubuntu, Docker, Vitis AI)
 Perform these steps on your Linux Host PC/Server:
