@@ -38,13 +38,50 @@ When modifying a Ultralytics YOLOv5 repository to adapt custom layers and activa
 > 💡 **Reference Guide:** For a detailed breakdown of replacing activation layers and modifying YOLOv5 source code for Vitis AI compatibility, refer to this [Hackster.io Guide on YOLOv5 Quantization with Vitis AI 3.0](https://www.hackster.io/LogicTronix/yolov5-quantization-compilation-with-vitis-ai-3-0-for-kria-7b005d).
 
 ### 1.2 Host Environment Setup (Ubuntu, Docker, Vitis AI)
-Perform these steps on your Linux Host PC/Server:
 
-1. **Install Ubuntu 20.04/22.04 LTS** with Docker Engine and NVIDIA Container Toolkit (if using GPU acceleration).
-2. **Pull the official Vitis AI Docker Image**:
-   ```bash
-   # CPU-only version
-   docker pull xilinx/vitis-ai-pytorch-cpu:latest
+### 1.2 Host Environment Setup (Ubuntu, Docker, Vitis AI)
 
-   # GPU-accelerated version (Recommended for faster calibration)
-   docker pull xilinx/vitis-ai-pytorch-gpu:latest
+To perform INT8 quantization, model inspection, and compilation, you must prepare the host environment with the official Vitis AI Docker container. You can follow the [Official Vitis AI MPSoC Setup Guide](https://xilinx.github.io/Vitis-AI/3.0/html/docs/quickstart/mpsoc.html) or run the commands below.
+
+#### Step 1: Install Ubuntu via WSL2 (Windows PowerShell)
+
+If operating on a Windows machine, set up an Ubuntu 20.04 environment using Windows Subsystem for Linux (WSL2):
+
+```powershell
+# Installs Ubuntu 20.04 distribution via WSL
+wsl --install -d Ubuntu-20.04
+
+# Lists all available online Linux distributions
+wsl --list --online
+
+# Launches the Ubuntu 20.04 environment
+wsl -d Ubuntu-20.04
+
+#### Step 2: Verify Docker on Ubuntu WSL
+After launching Ubuntu WSL and installing Docker Desktop (with WSL 2 backend integration enabled), run the following commands to clone Vitis AI and verify your container runtime:
+
+# Clones the official Xilinx Vitis AI repository
+git clone [https://github.com/Xilinx/Vitis-AI](https://github.com/Xilinx/Vitis-AI)
+
+# Verifies Docker runtime permissions and connectivity
+docker run hello-world
+
+# Checks the installed Docker client and engine versions
+docker --version
+
+#### Step 3: Pull Vitis AI Docker Image
+Pull the CPU-based PyTorch Docker image maintained by Xilinx:
+
+docker pull xilinx/vitis-ai-pytorch-cpu:latest
+
+#### Step 4: Launch Container & Configure Environment
+Navigate to the root directory of the cloned Vitis-AI repo, start the Docker container, and activate the required Python dependencies:
+
+# Launches the Vitis AI Docker container with workspace auto-mounted
+./docker_run.sh xilinx/vitis-ai-pytorch-cpu:latest
+
+# Activates the target PyTorch conda environment configured for Vitis AI quantization
+conda activate vitis-ai-pytorch
+
+# Installs supplementary packages required by the customized YOLOv5 architecture
+pip install seaborn timm efficientnet_pytorch
