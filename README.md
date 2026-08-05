@@ -1,4 +1,4 @@
-# Quantization & DPU Deployment for YOLOvDP-Enhanced on Xilinx ZCU102 🚀
+# QUANTIZATION AND DPU DEPLOYMENT FOR CUSTOM-LAYER YOLO MODEL (YOLOVDP-ENHANCED) ON XILINX ZCU102
 
 This repository provides a step-by-step guide on how to quantize, compile, and deploy **YOLOvDP-Enhanced**—a customized variant based on the **YOLOv5** architecture featuring custom layers—from PyTorch (`best.pt`) to an INT8 compiled `.xmodel` running on the Deep Learning Processing Unit (DPU) of the **Xilinx Zynq UltraScale+ MPSoC ZCU102** evaluation board.
 
