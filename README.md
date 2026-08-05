@@ -17,15 +17,12 @@ Because the Xilinx DPU hardware only supports a fixed set of standard neural net
 
 ---
 
-## 2. 🛠️ Prerequisites & System Setup
+## 1. 🛠️ Prerequisites & System Setup
 
-### 2.1 Model & Custom Layer Requirements
-Because the Xilinx DPU only supports a fixed set of hardware operations:
-- Custom layers must be mapped or re-implemented using standard PyTorch operators supported by the Vitis AI PyTorch Quantizer (`pytorch_nndct`).
-- Activation functions (e.g., `SiLU`, `Mish`) should be evaluated for DPU compatibility or mapped to hardware-friendly alternatives like `ReLU` or `LeakyReLU` during quantization.
-- The network should be structured to isolate the DPU-supported Backbone/Neck from any unsupported custom Post-processing/Detect heads (which can run fallback execution on the ZCU102 ARM CPU).
+### 1.1 Model & Custom Layer Requirements
 
-### 2.2 Host Environment Setup (Ubuntu, Docker, Vitis AI)
+
+### 1.2 Host Environment Setup (Ubuntu, Docker, Vitis AI)
 Perform these steps on your Linux Host PC/Server:
 
 1. **Install Ubuntu 20.04/22.04 LTS** with Docker Engine and NVIDIA Container Toolkit (if using GPU acceleration).
