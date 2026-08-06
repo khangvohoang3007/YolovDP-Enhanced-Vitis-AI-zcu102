@@ -1,0 +1,7 @@
+train: PDT_dataset/LL/YOLO_txt/train/images  # train images (relative to 'path')  3166+1370 images
+val: PDT_dataset/LL/YOLO_txt/val/images  # val images (relative to 'path')  355+172 images
+test: PDT_dataset/LL/YOLO_txt/test/images  # test images (optional)  390+ 177 images
+
+# Classes
+nc: 1  # number of classes
+names: ['unhealthy']

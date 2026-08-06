@@ -1,0 +1,10 @@
+{
+    "lib": "libvart-dpu-runner.so",
+    "filename": "ourVitis_zcu102.xmodel",
+    "kernel": [
+        "subgraph_DetectMultiBackend__DetectMultiBackend_DetectionModel_model__C3_model__C3_2__Conv_cv1__Conv2d_conv__input_11",
+        "subgraph_DetectMultiBackend__DetectMultiBackend_DetectionModel_model__C3_model__C3_16__Conv_cv1__Conv2d_conv__input_163",
+        "subgraph_DetectMultiBackend__DetectMultiBackend_DetectionModel_model__C3_model__C3_13__Conv_cv1__Conv2d_conv__input_137"
+    ],
+    "target": "DPUCZDX8G_ISA1_B4096"
+}
