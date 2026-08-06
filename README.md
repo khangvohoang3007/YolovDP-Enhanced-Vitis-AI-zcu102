@@ -4,7 +4,7 @@ This repository guides you through quantizing, compiling, and deploying a custom
 
 ---
 
-**The Story:**
+# **THE STORY:**
 I trained a custom object detection model based on the YOLOv5 architecture, integrated with custom layer structures (**YOLOvDP-Enhanced**), and obtained the floating-point weight file (`best.pt`).
 
 **The main challenge:**
