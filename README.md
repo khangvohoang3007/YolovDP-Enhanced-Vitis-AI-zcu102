@@ -95,3 +95,5 @@ pip install seaborn timm efficientnet_pytorch
 > 
 > * **WSL2 Memory Usage:** If you encounter performance issues with Ubuntu or WSL consuming excessive host RAM, you can limit the WSL virtual machine memory allocation (e.g., capping it at 4GB or 8GB depending on your quantization workload; setting `memory=1GB` for basic terminal operations). Check this setup guide: [WSL Memory Configuration Guide](https://youtu.be/urDkRPVvd88?si=wpjNyLsrLhyoyzaP).
 > * **Docker Disk Space Management:** The Vitis AI Docker container images are quite large and can quickly consume disk capacity. If Docker is taking up too much storage on your system drive, refer to this walkthrough: [Managing & Moving Docker Disk Usage](https://www.youtube.com/watch?v=MFtdjhwC1co).
+
+## 2. 🧮 Model Quantization Workflow (`best.pt` to `.xmodel`)
