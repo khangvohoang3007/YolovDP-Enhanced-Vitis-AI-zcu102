@@ -105,22 +105,20 @@ After starting the Vitis AI Docker container, activating the environment, instal
 
 ### Step 1: Pre-Quantization Setup
 
-**Navigate to the Vitis-AI workspace:**
+**👉 Navigate to the Vitis-AI workspace:**
    ```docker
    cd Vitis-AI
   ```
 
-**- Create the model workspace directory:**
+**👉 Create the model workspace directory:**
   ```docker
    mkdir -p Vitis_Model_Path
   ```
 
-**- Copy project repository files:**
-
+**👉 Copy project repository files:**
 Move all necessary files from this repository (including Quant.py, the Calib/ dataset directory, scripts, etc.) into your Vitis-AI workspace directory.
 
-**- Prepare Ultralytics YOLOv5 source:**
-
+**👉 Prepare Ultralytics YOLOv5 source:**
 You can set up the YOLOv5 source code in one of two ways:
 
 - **Option A (Standard):** Clone/install YOLOv5 directly from Ultralytics.
@@ -134,9 +132,9 @@ You can set up the YOLOv5 source code in one of two ways:
 
 ### Step 2: Quantization & DPU Compilation
 
-**- Execute Calibration (Pass 1):**
-
+**👉 Execute Calibration (Pass 1):**
 Run `Quant.py` in calibration mode to compute INT8 scaling factors:
+
   ```docker
    python Quant.py --weights /mnt/best.pt --dataset /mnt/calib/ --build_dir /mnt/build --quant_mode calib
   ```
@@ -144,7 +142,7 @@ Run `Quant.py` in calibration mode to compute INT8 scaling factors:
 > [!NOTE]
 > Update the `--weights` path to point to your actual `.pt` checkpoint file, and the `--dataset` path to your calibration directory (which must contain the `images/` and `labels/` subfolders).
 
-**- Run Evaluation & Export Quantized Artifacts (Pass 2):**
+**👉 Run Evaluation & Export Quantized Artifacts (Pass 2):**
 Once calibration completes, execute the script in `test` mode:
 
    ```docker
@@ -153,7 +151,69 @@ Once calibration completes, execute the script in `test` mode:
 > [!OUTCOME]
 > This generates intermediate artifacts inside the `quant_model/` folder, including `DetectMultiBackend_int.xmodel` and `arch.json`.
 
-**- Compile Model for ZCU102 FPGA Board:**
+**👉 Compile Model for ZCU102 FPGA Board:**
 Compile the intermediate `.xmodel` using the Vitis AI compiler (`vai_c_xir`) targeting the ZCU102 DPU architecture (`DPUCZDX8G`):
 
+```docker
+   vai_c_xir --xmodel /mnt/build/quant_model/DetectMultiBackend_int.xmodel --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU102/arch.json --net_name ourVitis_zcu102 --output_dir /mnt/build/final_model
+```
+
+> [!OUTCOME]
+> Outcome: The compiled FPGA executable `ourVitis_zcu102.xmodel` is saved in `/mnt/build/final_model/`.
+
+> [!NOTE]
+> For reference and troubleshooting, sample pre-compiled files from this stage are archived in the `post_quantum/` folder of this repository.
+
+### Step 3: Edge Board Deployment Prerequisites (ZCU102)
+To prepare for inference on the ZCU102 target board, gather the following artifacts alongside your generated `.xmodel` file:
+
+**👉 Calibration/Test Dataset Folder:**
+A folder containing sample test images scaled to your input resolution (e.g., 640x640).
+
+**👉 Validation File List (`val_list_final.txt`):**
+A plain text file listing image relative paths inside your calibration folder (optional if running single/few image inference).
+
+> [!WARNING]
+> Ensure filenames declared in `val_list_final.txt` avoid special characters like `(`, `)`, `/`, or `whitespace` to prevent execution errors on VART runtime.
+
+**👉 Model Configuration File (`.prototxt`):**
+If deploying standard YOLOv5 architectures (`yolov5s`, `yolov5n`), you can use the pre-configured `.prototxt` files in the `prototxt/` directory. For models with custom layers, construct a custom `.prototxt` file as shown below.
+
+### CUSTOM `.prototxt` CONSTRUCTION GUIDE:
+Refer to the standard structure below (example from `yolov5n`):
+```
+model {
+  kernel {
+    ...
+  }
+  model_type : YOLOv3
+  yolo_v3_param {
+    num_classes: 1                # Set to your trained dataset class count
+    anchorCnt: 3
+    layer_name: "layer 1"         # Must match output layer node names
+    layer_name: "layer 2"
+    layer_name: "layer 3"
+    ...
+    conf_threshold: 0.5           # Set your desired confidence threshold
+    nms_threshold: 0.65           # Set your desired NMS threshold
+
+    biases: 10
+    ...
+    biases: 326
+    test_mAP: false
+    type: YOLOV5
+  }
+  is_tf: false                    # Set strictly to false for PyTorch models
+}
+```
+
+> [!TIP]
+> **Determining `layer_name` entries for output layers:**
+> 
+> 1. Export your trained PyTorch model (`best.pt`) to `.onnx` format.
+> 2. Open [netron.app](https://netron.app) and upload your `.onnx` file.
+> 3. Scroll down to the final output nodes in the network graph.
+> 4. Identify the exact names of all output heads and declare each corresponding string under `layer_name` in sequential order inside your `.prototxt` file.
+> 
+> *Note: Exact string matching is mandatory for VART to parse model outputs correctly.*
 
