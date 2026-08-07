@@ -260,3 +260,7 @@ Transfer the required files to your target workspace on the ZCU102 board:
 After generating `out_results.txt`, transfer the file back to your host machine to:
 - Draw bounding boxes and render detected output images.
 - Run custom evaluation Python scripts to compare detection results against ground-truth labels.
+
+### 🖼️ Detection Output Sample
+
+![Inference Result](./run/0_test640_2_result.jpg)
