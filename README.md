@@ -96,4 +96,39 @@ pip install seaborn timm efficientnet_pytorch
 > * **WSL2 Memory Usage:** If you encounter performance issues with Ubuntu or WSL consuming excessive host RAM, you can limit the WSL virtual machine memory allocation (e.g., capping it at 4GB or 8GB depending on your quantization workload; setting `memory=1GB` for basic terminal operations). Check this setup guide: [WSL Memory Configuration Guide](https://youtu.be/urDkRPVvd88?si=wpjNyLsrLhyoyzaP).
 > * **Docker Disk Space Management:** The Vitis AI Docker container images are quite large and can quickly consume disk capacity. If Docker is taking up too much storage on your system drive, refer to this walkthrough: [Managing & Moving Docker Disk Usage](https://www.youtube.com/watch?v=MFtdjhwC1co).
 
+
 ## 2. 🧮 Model Quantization Workflow (`best.pt` to `.xmodel`)
+
+After starting the Vitis AI Docker container, activating the environment, installing required dependencies, and cloning this repository into your working directory, execute the quantization and compilation workflow as detailed below.
+
+---
+
+### Step 1: Pre-Quantization Setup
+
+**Navigate to the Vitis-AI workspace:**
+   ```docker
+   cd Vitis-AI
+  ```
+
+**Create the model workspace directory:**
+  ```docker
+   mkdir -p Vitis_Model_Path
+  ```
+
+**Copy project repository files:**
+
+Move all necessary files from this repository (including Quant.py, the Calib/ dataset directory, scripts, etc.) into your Vitis-AI workspace directory.
+
+**Prepare Ultralytics YOLOv5 source:**
+
+You can set up the YOLOv5 source code in one of two ways:
+
+- **Option A (Standard):** Clone/install YOLOv5 directly from Ultralytics.
+- **Option B (Custom):** Copy your custom YOLOv5 source folder directly into `Vitis_Model_Path/`.
+
+> [!IMPORTANT]
+> Ensure core scripts (`common.py`, `yolo.py`, `experimental.py`, etc.) contain your modified activation functions (such as the SiLU-to-ReLU conversions described in Section 1).
+
+> [!TIP]
+> Check the template files inside the `Vitis_Model_Path/` directory in this repository for directory structure guidance.
+
