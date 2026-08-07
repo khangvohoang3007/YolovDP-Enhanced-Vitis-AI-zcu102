@@ -217,3 +217,4 @@ model {
 > 
 > *Note: Exact string matching is mandatory for VART to parse model outputs correctly.*
 
+## 3. 🚀 ZCU102 Board Setup & Model Execution
