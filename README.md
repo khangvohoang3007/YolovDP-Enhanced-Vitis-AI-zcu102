@@ -110,16 +110,16 @@ After starting the Vitis AI Docker container, activating the environment, instal
    cd Vitis-AI
   ```
 
-**Create the model workspace directory:**
+**- Create the model workspace directory:**
   ```docker
    mkdir -p Vitis_Model_Path
   ```
 
-**Copy project repository files:**
+**- Copy project repository files:**
 
 Move all necessary files from this repository (including Quant.py, the Calib/ dataset directory, scripts, etc.) into your Vitis-AI workspace directory.
 
-**Prepare Ultralytics YOLOv5 source:**
+**- Prepare Ultralytics YOLOv5 source:**
 
 You can set up the YOLOv5 source code in one of two ways:
 
@@ -131,4 +131,29 @@ You can set up the YOLOv5 source code in one of two ways:
 
 > [!TIP]
 > Check the template files inside the `Vitis_Model_Path/` directory in this repository for directory structure guidance.
+
+### Step 2: Quantization & DPU Compilation
+
+**- Execute Calibration (Pass 1):**
+
+Run `Quant.py` in calibration mode to compute INT8 scaling factors:
+  ```docker
+   python Quant.py --weights /mnt/best.pt --dataset /mnt/calib/ --build_dir /mnt/build --quant_mode calib
+  ```
+
+> [!NOTE]
+> Update the `--weights` path to point to your actual `.pt` checkpoint file, and the `--dataset` path to your calibration directory (which must contain the `images/` and `labels/` subfolders).
+
+**- Run Evaluation & Export Quantized Artifacts (Pass 2):**
+Once calibration completes, execute the script in `test` mode:
+
+   ```docker
+   python Quant.py --weights /mnt/best.pt --dataset /mnt/calib/ --build_dir /mnt/build --quant_mode test
+   ```
+> [!OUTCOME]
+> This generates intermediate artifacts inside the `quant_model/` folder, including `DetectMultiBackend_int.xmodel` and `arch.json`.
+
+**- Compile Model for ZCU102 FPGA Board:**
+Compile the intermediate `.xmodel` using the Vitis AI compiler (`vai_c_xir`) targeting the ZCU102 DPU architecture (`DPUCZDX8G`):
+
 
