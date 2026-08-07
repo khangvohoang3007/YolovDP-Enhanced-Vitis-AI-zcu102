@@ -1,4 +1,4 @@
-# QUANTIZATION AND DPU DEPLOYMENT FOR CUSTOM-LAYER YOLO MODEL (YOLOVDP-ENHANCED) ON XILINX ZCU102
+# QUANTIZATION AND DPU DEPLOYMENT FOR CUSTOM - LAYER YOLO MODEL (YOLOvDP - ENHANCED) ON XILINX ZCU102
 
 This repository guides you through quantizing, compiling, and deploying a custom-layer YOLOv5 model (`YOLOvDP-Enhanced`) from PyTorch FP32 (`best.pt`) to an INT8 `.xmodel` running on the **Xilinx ZCU102 DPU**.
 
