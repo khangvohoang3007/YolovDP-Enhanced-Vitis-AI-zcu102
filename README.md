@@ -218,3 +218,45 @@ model {
 > *Note: Exact string matching is mandatory for VART to parse model outputs correctly.*
 
 ## 3. 🚀 ZCU102 Board Setup & Model Execution
+
+---
+
+### Step 3.1: ZCU102 Target Board Setup
+
+1. **Prepare MicroSD Card:** Prepare a MicroSD card (minimum **32 GB** capacity).
+2. **Board Environment & Flashing:**
+   - Download the compatible Vitis AI board image/packages for ZCU102.
+   - For step-by-step setup and board installation instructions, please follow the [Official Vitis AI Setup Guide](https://github.com/Xilinx/Vitis-AI) to keep this guide concise.
+   - Alternatively, a detailed step-by-step setup guide in **Vietnamese** (covering board configuration, OS flashing, and PC-to-Board serial/SSH connection) is provided inside the `documents/` folder of this repository.
+
+---
+
+### Step 3.2: Running Inference on ZCU102 Board
+
+#### 1. Transfer Deployment Artifacts
+Transfer the required files to your target workspace on the ZCU102 board:
+
+- **Model Deployment Folder (`ourVitis_zcu102/`):** Contains `md5sum.txt`, `meta.json`, `ourVitis_zcu102.xmodel`, and `ourVitis_zcu102.prototxt`.
+- **Validation Data Folder (`calib/`):** Contains test images and the image declaration list (`val_list_final.txt`).
+
+---
+
+#### 2. Execute Detection Commands
+
+* **Single Image Detection:**
+  Run the test executable on a single test image:
+  ```bash
+  ./test_jpeg_yolov5 ourVitis_zcu102.xmodel test640.jpeg
+  ```
+* **Batch / Multithreaded Accuracy Evaluation:**
+   Run batch inference across the entire evaluation dataset:
+  ```bash
+  ./test_accuracy_yolov5_mt ourVitis_zcu102 val_list_final.txt out_results.txt -t 1
+  ```
+> [!NOTE]
+> The directory `ourVitis_zcu102/` must contain both the `.xmodel` and `.prototxt` files. The execution will output bounding box predictions saved inside `out_results.txt`.
+
+#### 3. Post-Processing & Accuracy Comparison
+After generating `out_results.txt`, transfer the file back to your host machine to:
+- Draw bounding boxes and render detected output images.
+- Run custom evaluation Python scripts to compare detection results against ground-truth labels.
