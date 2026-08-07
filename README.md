@@ -270,3 +270,19 @@ After generating `out_results.txt`, transfer the file back to your host machine 
 ### 🖼️ Detection Output Sample
 
 ![Inference Result](./run/0_test640_2_result.jpg)
+
+
+## 🛠️ Troubleshooting
+
+- **Execution Failures / Crashes:**
+  - **Check Activation Functions:** Ensure all model activations are supported by the target DPU hardware.
+  - **Verify `layer_name`:** Confirm layer names in `.prototxt` using [netron.app](https://netron.app) or inspect the `.xmodel` directly on the board:
+    ```bash
+    xdputil xmodel /mnt/yolov5n_zcu102.xmodel
+    ```
+
+- **Inaccurate Detections (Compared to `best.pt`):**
+  - **Check Image Order:** Ensure the file paths in `val_list_final.txt` strictly match the original image sequence.
+
+- **Overlapping or Over-Sized Bounding Boxes:**
+  - **Tune Thresholds:** Adjust `nms_threshold` and `conf_threshold` inside your `.prototxt` file.
