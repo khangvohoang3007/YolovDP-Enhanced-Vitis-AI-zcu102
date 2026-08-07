@@ -148,8 +148,8 @@ Once calibration completes, execute the script in `test` mode:
    ```docker
    python Quant.py --weights /mnt/best.pt --dataset /mnt/calib/ --build_dir /mnt/build --quant_mode test
    ```
-> [!OUTCOME]
-> This generates intermediate artifacts inside the `quant_model/` folder, including `DetectMultiBackend_int.xmodel` and `arch.json`.
+> [!TIP]
+> OUTCOME: This generates intermediate artifacts inside the `quant_model/` folder, including `DetectMultiBackend_int.xmodel` and `arch.json`.
 
 **👉 Compile Model for ZCU102 FPGA Board:**
 Compile the intermediate `.xmodel` using the Vitis AI compiler (`vai_c_xir`) targeting the ZCU102 DPU architecture (`DPUCZDX8G`):
@@ -158,8 +158,8 @@ Compile the intermediate `.xmodel` using the Vitis AI compiler (`vai_c_xir`) tar
    vai_c_xir --xmodel /mnt/build/quant_model/DetectMultiBackend_int.xmodel --arch /opt/vitis_ai/compiler/arch/DPUCZDX8G/ZCU102/arch.json --net_name ourVitis_zcu102 --output_dir /mnt/build/final_model
 ```
 
-> [!OUTCOME]
-> Outcome: The compiled FPGA executable `ourVitis_zcu102.xmodel` is saved in `/mnt/build/final_model/`.
+> [!TIP]
+> OUTCOME: The compiled FPGA executable `ourVitis_zcu102.xmodel` is saved in `/mnt/build/final_model/`.
 
 > [!NOTE]
 > For reference and troubleshooting, sample pre-compiled files from this stage are archived in the `post_quantum/` folder of this repository.
