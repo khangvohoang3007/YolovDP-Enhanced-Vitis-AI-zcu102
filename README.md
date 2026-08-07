@@ -286,3 +286,14 @@ After generating `out_results.txt`, transfer the file back to your host machine 
 
 - **Overlapping or Over-Sized Bounding Boxes:**
   - **Tune Thresholds:** Adjust `nms_threshold` and `conf_threshold` inside your `.prototxt` file.
+
+
+### 🚀 Happy Coding & Keep Researching!
+
+Thanks for checking out our project! 
+
+Deploying YOLO models on FPGA boards like the ZCU102 using Vitis AI is a niche topic with very limited documentation online. Having stumbled through countless trial-and-error debugging sessions myself during this implementation, I completely understand the struggle! 
+
+If you encounter any issues or get stuck along the way, feel free to **open an Issue**, **ask a question**, or **reach out**—I'd be more than happy to help if I can. 
+
+If this repository saved you some time or helped your research, please give it a ⭐! Wish you the best of luck with your project! 😊
