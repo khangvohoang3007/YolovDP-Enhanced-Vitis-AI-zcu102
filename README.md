@@ -256,6 +256,12 @@ Transfer the required files to your target workspace on the ZCU102 board:
 > [!NOTE]
 > The directory `ourVitis_zcu102/` must contain both the `.xmodel` and `.prototxt` files. The execution will output bounding box predictions saved inside `out_results.txt`.
 
+* **Benchmark model performance (FPS & Latency) on the ZCU102 board:**
+  ```bash
+  xdputil benchmark /mnt/ourVitis_zcu102.xmodel 4
+  ```
+
+
 #### 3. Post-Processing & Accuracy Comparison
 After generating `out_results.txt`, transfer the file back to your host machine to:
 - Draw bounding boxes and render detected output images.
