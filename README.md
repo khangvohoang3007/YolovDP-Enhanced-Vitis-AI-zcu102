@@ -112,7 +112,7 @@ After starting the Vitis AI Docker container, activating the environment, instal
 
 **👉 Create the model workspace directory:**
   ```docker
-   mkdir -p Vitis_Model_Path
+  mkdir -p Vitis_Model_Path
   ```
 
 **👉 Copy project repository files:**
